@@ -10,7 +10,7 @@ from argparse import ArgumentParser
 
 
 class SlackLogger:
-    def __init__(self, sub_domain, webhook_url, channel, username='Logger'):
+    def __init__(self, webhook_url, channel, username='Logger'):
 
         self.base_uri = '{0}'.format(webhook_url)
         self.channel = channel
@@ -69,7 +69,6 @@ class SlackLogger:
 def main():
     try:
         webhook_url = os.environ["SLACK_WEBHOOK_URL"]
-        sub_domain = os.environ["SLACK_SUB_DOMAIN"]
 
     except KeyError:
         print('ERROR: Please set the SLACK_WEB_HOOK_TOKEN AND SLACK_SUB_DOMAIN variable in your environment.')
@@ -84,7 +83,7 @@ def main():
 
         args = parser.parse_args()
 
-        client = SlackLogger(sub_domain, webhook_url, args.channel, args.name)
+        client = SlackLogger(webhook_url, args.channel, args.name)
 
         if args.level == 1:
             response = client.info(args.title, args.message)
